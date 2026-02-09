@@ -10,7 +10,7 @@ public class Commande : MonoBehaviour
     //file
     Queue<string> fileCommande;
 
-    public int argent = 0;
+    //public int argent = 0;
     string[] tabCommande;
     //dictionaire
     Dictionary<string, Stack<string>> dicoCommandePossible;
@@ -169,9 +169,9 @@ public class Commande : MonoBehaviour
             if (i == dicoCommandePossible[fileCommande.Peek()].Count)
             {
                 Debug.Log("bonne commande");
-                argent += 25;
+                GameManager.instance.argent += 25;
                 fileCommande.Dequeue();
-                argentText.text = "argent : " + argent;
+                argentText.text = "argent : " + GameManager.instance.argent;
 
                 //reset de la pile
                 cuisine.ResetPile();
@@ -185,8 +185,8 @@ public class Commande : MonoBehaviour
             //sinon
             else
             {
-                argent -= 25;
-                argentText.text = "argent : " + argent;
+                GameManager.instance.argent -= 25;
+                argentText.text = "argent : " + GameManager.instance.argent;
                 fileCommande.Dequeue();
 
                 //reset de la pile
