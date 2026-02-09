@@ -9,16 +9,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -3453340161848835122, guid: 0307c7a597c48cf4496bae15b86b4114, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -3453340161848835122, guid: 0307c7a597c48cf4496bae15b86b4114, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -3453340161848835122, guid: 0307c7a597c48cf4496bae15b86b4114, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -3453340161848835122, guid: 0307c7a597c48cf4496bae15b86b4114, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 48.244778
+      value: -4.237
       objectReference: {fileID: 0}
     - target: {fileID: -3453340161848835122, guid: 0307c7a597c48cf4496bae15b86b4114, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.2080107
+      value: 1.5242
       objectReference: {fileID: 0}
     - target: {fileID: -3453340161848835122, guid: 0307c7a597c48cf4496bae15b86b4114, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.2910032
+      value: 25.494501
       objectReference: {fileID: 0}
     - target: {fileID: -3453340161848835122, guid: 0307c7a597c48cf4496bae15b86b4114, type: 3}
       propertyPath: m_LocalRotation.w
@@ -48,9 +60,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3453340161848835122, guid: 0307c7a597c48cf4496bae15b86b4114, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 643937246941491661, guid: 0307c7a597c48cf4496bae15b86b4114, type: 3}
       propertyPath: m_Name
-      value: burger_bun_with_sesame_seeds
+      value: PainPrefabHaut
+      objectReference: {fileID: 0}
+    - target: {fileID: 643937246941491661, guid: 0307c7a597c48cf4496bae15b86b4114, type: 3}
+      propertyPath: m_TagString
+      value: Pain
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

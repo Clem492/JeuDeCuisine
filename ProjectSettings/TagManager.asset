@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - borne
+  - Pain
+  - Salade
+  - Viande
+  - Champignon
   layers:
   - Default
   - TransparentFX
