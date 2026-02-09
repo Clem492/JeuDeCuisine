@@ -6,7 +6,7 @@ public class PNJManager : MonoBehaviour
     [SerializeField] Transform PNJSpawnPoint;
 
     [SerializeField] private GameObject[] pnj;
-
+    
     //système de pool pour les pnj 
     public int poolSize;
     private GameObject[] pnjPool;
