@@ -16,13 +16,15 @@ public class Poubelle : MonoBehaviour
         antiSpamCoroutine = true;
         garbagePourcentage = 0;
         textPourcentage.text = garbagePourcentage + "% ";
+        ChangeColor();
     }
 
     public void AddGarbage()
     {
         textPourcentage.text = garbagePourcentage + "% ";
         garbagePourcentage += 5;
-        if(garbagePourcentage >= 100 && antiSpamCoroutine)
+        ChangeColor();
+        if (garbagePourcentage >= 100 && antiSpamCoroutine)
         {
             antiSpamCoroutine = false;
             StartCoroutine(LooseMoneyGarbage());
@@ -39,23 +41,24 @@ public class Poubelle : MonoBehaviour
         textPourcentage.text = garbagePourcentage + "% / 100%";
         looseMoneyWithTime = 1;
         antiSpamCoroutine = true;
+        ChangeColor();
     }
 
     private void ChangeColor()
     {
-        if(garbagePourcentage <= 25)
+        if(garbagePourcentage <= 24)
         {
             textPourcentage.color = Color.gray;
         }
-        else if (garbagePourcentage <= 50)
+        else if (garbagePourcentage <= 49)
         {
             textPourcentage.color = Color.green;
         }
-        else if (garbagePourcentage <= 75)
+        else if (garbagePourcentage <= 74)
         {
             textPourcentage.color = Color.yellow;
         }
-        else if (garbagePourcentage <= 100)
+        else if (garbagePourcentage <= 99)
         {
             textPourcentage.color = Color.red;
         }
@@ -67,6 +70,16 @@ public class Poubelle : MonoBehaviour
     }
     private void Update()
     {
-        Input.GetKeyDown(KeyCode.Space);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            garbagePourcentage += 5;
+            ChangeColor();
+            textPourcentage.text = garbagePourcentage + "%";
+        }
+        if (garbagePourcentage >= 100 && antiSpamCoroutine)
+        {
+            antiSpamCoroutine = false;
+            StartCoroutine(LooseMoneyGarbage());
+        }
     }
 }

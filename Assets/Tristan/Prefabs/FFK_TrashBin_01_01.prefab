@@ -645,7 +645,7 @@ GameObject:
   - component: {fileID: 710239394775248710}
   m_Layer: 0
   m_Name: FFK_TrashBin_01_01
-  m_TagString: Untagged
+  m_TagString: Poubelle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647

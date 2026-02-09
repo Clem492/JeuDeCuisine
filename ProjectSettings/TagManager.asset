@@ -9,6 +9,7 @@ TagManager:
   - Salade
   - Viande
   - Champignon
+  - Poubelle
   layers:
   - Default
   - TransparentFX

@@ -1,9 +1,10 @@
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
+    [SerializeField] TextMeshProUGUI argentText;
 
     public int argent;
     void Start()
@@ -18,5 +19,8 @@ public class GameManager : MonoBehaviour
         }
         argent = 0;
     }
-   
+    private void Update()
+    {
+        argentText.text = argent.ToString()+" $";
+    }
 }
