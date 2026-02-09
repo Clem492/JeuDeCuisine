@@ -22,7 +22,7 @@ public class SpawnFood : MonoBehaviour
         {
             pileGo.Push(Instantiate(go, hit.point, Quaternion.Euler(180, 0, 0)));
         }
-        if (go.CompareTag("Viande"))
+         else if (go.CompareTag("Viande"))
         {
             pileGo.Push(Instantiate(go, new Vector3(hit.point.x, hit.point.y, hit.point.z), Quaternion.Euler(-90, 0, 0)));
         }
