@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Deplacementcam : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class Deplacementcam : MonoBehaviour
 
         
     }
+    //vers l'anvant ou arrière
     private void ChangeDirect()
     {
         if (transform.position.z > zMax)
@@ -39,5 +41,14 @@ public class Deplacementcam : MonoBehaviour
 
             Moove = false;
         }
+    }
+
+    public void Play()
+    {
+        SceneManager.LoadScene("Game");
+    }
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
