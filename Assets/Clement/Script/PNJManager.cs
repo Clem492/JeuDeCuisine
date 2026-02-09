@@ -1,12 +1,23 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PNJManager : MonoBehaviour
 {
+    public static PNJManager instance;
+
+    
+
     [SerializeField] Transform PNJSpawnPoint;
 
     [SerializeField] private GameObject[] pnj;
+
+   
+
+    public Queue<GameObject> PNJFileAttenteComptoir;
     
+
     //système de pool pour les pnj 
     public int poolSize;
     private GameObject[] pnjPool;
@@ -47,5 +58,7 @@ public class PNJManager : MonoBehaviour
         }
         
     }
+
+   
 
 }

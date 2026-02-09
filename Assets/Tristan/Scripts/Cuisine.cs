@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -32,6 +33,9 @@ public class Cuisine : MonoBehaviour
     public bool sensPain = false;
 
     [SerializeField] TextMeshProUGUI instruction;
+
+    [SerializeField] PNJManager pnjManager;
+    public bool commandePrise;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -109,8 +113,15 @@ public class Cuisine : MonoBehaviour
                     pileString.Push(Salade);
                     spawnFood.Spawn(prefabSalade, pileGameObject);
                 }
-
+                if (pnjManager.PNJFileAttenteComptoir.Peek() != null)
+                {
+                    StartCoroutine(CommandePriseCoroutine());
+                }
             }
+
+
+            
+
             
         }
 
@@ -160,5 +171,12 @@ public class Cuisine : MonoBehaviour
             GameObject temp =pileGameObject.Pop();
             Destroy(temp);
         }
+    }
+
+    private IEnumerator CommandePriseCoroutine()
+    {
+        commandePrise = true;
+        yield return new WaitForEndOfFrame();
+        commandePrise = false;
     }
 }
