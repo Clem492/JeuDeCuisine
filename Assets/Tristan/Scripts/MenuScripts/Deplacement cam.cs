@@ -30,11 +30,11 @@ public class Deplacementcam : MonoBehaviour
     }
     private void ChangeDirect()
     {
-        if (transform.position.x > zMax)
+        if (transform.position.z > zMax)
         {
             Moove = true;
         }
-        else if (transform.position.x < zMin)
+        else if (transform.position.z < zMin)
         {
 
             Moove = false;
