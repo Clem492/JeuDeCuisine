@@ -12,6 +12,9 @@ TagManager:
   - Poubelle
   - Comptoir
   - chaise
+  - FxTemporaire
+  - PNJ
+  - bin
   layers:
   - Default
   - TransparentFX

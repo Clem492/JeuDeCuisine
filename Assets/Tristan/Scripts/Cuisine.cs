@@ -22,7 +22,7 @@ public class Cuisine : MonoBehaviour
     [SerializeField] Commande commande;
     [SerializeField] SpawnFood spawnFood;
     [SerializeField] Poubelle poubelle;
-
+    [SerializeField] ComptoirPosition comptoir;
     //poubelle
     [SerializeField] GameObject poubelleInterieur,poubelleExterieur;
     [SerializeField] RawImage poubelleImage;
@@ -123,10 +123,10 @@ public class Cuisine : MonoBehaviour
                     pileString.Push(Salade);
                     spawnFood.Spawn(prefabSalade, pileGameObject);
                 }
-                //if (pnjManager.PNJFileAttenteComptoir.Peek() != null)
-                //{
-                //    StartCoroutine(CommandePriseCoroutine());
-                //}
+                if (comptoir.ComptoirOccuper)
+                {
+                    StartCoroutine(CommandePriseCoroutine());
+                }
 
                 if (hit.transform.gameObject == poubelleInterieur && !poubelleInInventory)
                 {
@@ -197,8 +197,9 @@ public class Cuisine : MonoBehaviour
 
     private IEnumerator CommandePriseCoroutine()
     {
+        Debug.Log("commande prise");
         commandePrise = true;
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(1);
         commandePrise = false;
     }
 }

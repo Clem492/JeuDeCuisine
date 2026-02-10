@@ -20155,9 +20155,9 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.033333335
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: eee9a75492c005340bb5579573d61ed8, type: 2}
+  m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
 --- !u!1001 &868312671
 PrefabInstance:
@@ -47273,6 +47273,7 @@ MonoBehaviour:
   commande: {fileID: 1038354198}
   spawnFood: {fileID: 794052939}
   poubelle: {fileID: 1306479847}
+  comptoir: {fileID: 0}
   poubelleInterieur: {fileID: 1306479846}
   poubelleExterieur: {fileID: 982788827909343424}
   poubelleImage: {fileID: 970912020789717050}
