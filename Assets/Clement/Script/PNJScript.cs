@@ -21,9 +21,9 @@ public class PNJScript : MonoBehaviour
     private Vector3 startPosition;
 
 
-    private bool borneOccuper0;
-    private bool borneOccuper1;
-    private bool chaiseOccuper1;
+   
+
+    public int indicePnj;
 
     private void Awake()
     {
@@ -38,9 +38,8 @@ public class PNJScript : MonoBehaviour
 
     void Start()
     {
-        borneOccuper0 = borne[0].GetComponent<borne>().borneOccuper;
-        borneOccuper1 = borne[1].GetComponent<borne>().borneOccuper;
-        StartCoroutine(Commander());
+
+        StartCoroutine(Attente());
     }
 
 
@@ -50,25 +49,32 @@ public class PNJScript : MonoBehaviour
     //ensuite il va a la caisse le joueur prend la commande
     //il va s'assoir et attend ça commande et mange
     //va deposer son plateau et resort 
+
+    private IEnumerator Attente()
+    {
+        yield return new WaitForSeconds(indicePnj);
+        StartCoroutine(Commander());
+    }
+
     private IEnumerator Commander()
     {
 
-
-        if (!borneOccuper0)
+        for (int i = 0; i < indicePnj *100; i++)
         {
-            borneOccuper0 = true;
+            yield return new WaitForEndOfFrame();
+        }
+        
+        if (!borne[0].GetComponent<borne>().borneOccuper)
+        {
+            borne[0].GetComponent<borne>().borneOccuper = true;
             pnjNavMeshAgent.SetDestination(borne[0].transform.position);
+            yield break;
         }
-        else if (!borneOccuper1)
-        {
-            borneOccuper1 = true;
-            pnjNavMeshAgent.SetDestination(borne[1].transform.position);
-        }
-        else if (borneOccuper0 && !borneOccuper1)
+        else if (!borne[1].GetComponent<borne>().borneOccuper)
         {
             borne[1].GetComponent<borne>().borneOccuper = true;
-            yield return new WaitUntil(() => !borne[1].GetComponent<borne>().borneOccuper);
             pnjNavMeshAgent.SetDestination(borne[1].transform.position);
+            yield break;
         }
         else if (borne[0].GetComponent<borne>().borneOccuper && borne[1].GetComponent<borne>().borneOccuper)
         {

@@ -13,7 +13,7 @@ public class PNJManager : MonoBehaviour
 
     [SerializeField] private GameObject[] pnj;
 
-   
+    public int indicePnj;
 
     public Queue<GameObject> PNJFileAttenteComptoir;
     
@@ -23,16 +23,22 @@ public class PNJManager : MonoBehaviour
     private GameObject[] pnjPool;
     private int poolIndex;
 
+
+    private void Awake()
+    {
+        pnj = GameObject.FindGameObjectsWithTag("PNJ");
+        Debug.Log(pnj.Length);
+        foreach (GameObject p in pnj)
+        {
+            p.GetComponent<PNJScript>().indicePnj = indicePnj;
+            indicePnj++;
+        }
+    }
+
     private void Start()
     {
-        pnjPool = new GameObject[poolSize];
-        for (int i = 0; i< poolSize; i++)
-        {
-            pnjPool[i] = Instantiate(pnj[i]);
-            pnjPool[i].SetActive(false);
-        }
+   
 
-        StartCoroutine(SpawnPNJ());
     }
 
 
