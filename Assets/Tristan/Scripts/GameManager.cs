@@ -23,4 +23,16 @@ public class GameManager : MonoBehaviour
     {
         argentText.text = argent.ToString()+" $";
     }
+
+    public void verifVictoireDefaite()
+    {
+        if(argent < 0)
+        {
+            //defaite
+        }
+        if(argent >= 1000)
+        {
+            //victoire
+        }
+    }
 }
