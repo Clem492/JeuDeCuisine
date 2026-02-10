@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,17 +23,18 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         argentText.text = argent.ToString()+" $";
+        verifVictoireDefaite();
     }
 
     public void verifVictoireDefaite()
     {
         if(argent < 0)
         {
-            //defaite
+            SceneManager.LoadScene("Defaite");
         }
         if(argent >= 1000)
         {
-            //victoire
+            SceneManager.LoadScene("Victoire");
         }
     }
 }
