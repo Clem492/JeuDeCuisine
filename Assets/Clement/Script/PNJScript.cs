@@ -5,24 +5,34 @@ using UnityEngine.AI;
 
 public class PNJScript : MonoBehaviour
 {
-   
+    [SerializeField] private int TimeToEat;
+    [SerializeField] private int TimeChooseCommand;
+    [SerializeField] private int TimeDropTrash;
+    
+
     private NavMeshAgent pnjNavMeshAgent;
 
     private GameObject[] borne;
-    private GameObject[] ComptoirPosition;
+    private GameObject[] comptoirPosition;
+    private GameObject[] chaisePosition;
+    private GameObject bin;
     private Cuisine cuisine;
+
+    private Vector3 startPosition;
+
 
     private void Awake()
     {
         pnjNavMeshAgent = GetComponent<NavMeshAgent>();
         borne = GameObject.FindGameObjectsWithTag("borne");
-        ComptoirPosition = GameObject.FindGameObjectsWithTag("Comptoir");
-        
+        comptoirPosition = GameObject.FindGameObjectsWithTag("Comptoir");
+        chaisePosition = GameObject.FindGameObjectsWithTag("chaise");
+        startPosition = transform.position;
     }
 
     void Start()
     {
-        
+        StartCoroutine(Commander());
     }
 
 
@@ -32,7 +42,7 @@ public class PNJScript : MonoBehaviour
     //ensuite il va a la caisse le joueur prend la commande
     //il va s'assoir et attend ça commande et mange
     //va deposer son plateau et resort 
-    private IEnumerator Commander(NavMeshAgent pnjNavMeshAgent)
+    private IEnumerator Commander()
     {
         for (int i = 0; i < borne.Length; i++)
         {
@@ -48,25 +58,37 @@ public class PNJScript : MonoBehaviour
 
         }
         //attend 5 second avant d'aller au comptoir 
-        yield return new WaitForSeconds(5);
-        PNJManager.instance.PNJFileAttenteComptoir.Enqueue(gameObject);
+        yield return new WaitForSeconds(TimeChooseCommand);
+        
 
-        if (!ComptoirPosition[0].GetComponent<ComptoirPosition>().ComptoirOccuper)
+        if (!comptoirPosition[0].GetComponent<ComptoirPosition>().ComptoirOccuper)
         {
-            pnjNavMeshAgent.SetDestination(ComptoirPosition[0].transform.position);
+            pnjNavMeshAgent.SetDestination(comptoirPosition[0].transform.position);
         }
         else
         {
-            pnjNavMeshAgent.SetDestination(ComptoirPosition[1].transform.position);
-            yield return new WaitUntil(() => !ComptoirPosition[0].GetComponent<ComptoirPosition>().ComptoirOccuper);
-            pnjNavMeshAgent.SetDestination(ComptoirPosition[0].transform.position);
+            pnjNavMeshAgent.SetDestination(comptoirPosition[1].transform.position);
+            yield return new WaitUntil(() => !comptoirPosition[0].GetComponent<ComptoirPosition>().ComptoirOccuper);
+            pnjNavMeshAgent.SetDestination(comptoirPosition[0].transform.position);
         }
 
         //attend que le joueur prend la commande du pnj
-        yield return new WaitUntil(() => cuisine.commandePrise && PNJManager.instance.PNJFileAttenteComptoir.Peek() == gameObject);
-        PNJManager.instance.PNJFileAttenteComptoir.Dequeue();
+        yield return new WaitUntil(() => cuisine.commandePrise && gameObject.transform.position == comptoirPosition[0].transform.position);
+        
+        for (int i = 0; i < chaisePosition.Length; i++)
+        {
+            if (!chaisePosition[i].GetComponent<chaisePosition>().chaiseOccuper) pnjNavMeshAgent.SetDestination(chaisePosition[i].transform.position);
+        }
 
+        //attendre pour manger
+        yield return new WaitForSeconds(TimeToEat);
+        //faut décrémenter le burger
 
+        pnjNavMeshAgent.SetDestination(bin.transform.position);
+        yield return new WaitForSeconds(TimeDropTrash);
+        pnjNavMeshAgent.SetDestination(startPosition);
+        yield return new WaitUntil(() => transform.position == startPosition);
+        Destroy(gameObject);
     }
 
 
