@@ -1,7 +1,9 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEditor.Progress;
 
 public class Cuisine : MonoBehaviour
@@ -19,6 +21,12 @@ public class Cuisine : MonoBehaviour
     //récupère les autres scripts
     [SerializeField] Commande commande;
     [SerializeField] SpawnFood spawnFood;
+    [SerializeField] Poubelle poubelle;
+
+    //poubelle
+    [SerializeField] GameObject poubelleInterieur,poubelleExterieur;
+    [SerializeField] RawImage poubelleImage;
+    private bool poubelleInInventory;
 
     Stack<string> pileString = new Stack<string>();
     Stack<GameObject> pileGameObject = new Stack<GameObject>();
@@ -29,7 +37,7 @@ public class Cuisine : MonoBehaviour
     private string Viande = "Viande";
     private string Champignon = "Champignon";
     private string Salade = "Salade";
-
+    private string Poubelle = "Poubelle";
     public bool sensPain = false;
 
     [SerializeField] TextMeshProUGUI instruction;
@@ -39,8 +47,10 @@ public class Cuisine : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        poubelleImage.enabled = false;
+        poubelleInInventory = false;
         instruction.text = "";
-       listPainDansPile = new List<string>();
+        listPainDansPile = new List<string>();
     }
 
     // Update is called once per frame
@@ -53,7 +63,7 @@ public class Cuisine : MonoBehaviour
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, rayRange))
         {
             //aficher text quand ont vise un ingredients
-            if(hit.transform.gameObject.CompareTag(Pain) || hit.transform.gameObject.CompareTag(Viande) || hit.transform.gameObject.CompareTag(Champignon) || hit.transform.gameObject.CompareTag(Salade))
+            if(hit.transform.gameObject.CompareTag(Pain) || hit.transform.gameObject.CompareTag(Viande) || hit.transform.gameObject.CompareTag(Champignon) || hit.transform.gameObject.CompareTag(Salade) || hit.transform.gameObject.CompareTag(Poubelle))
             {
                 instruction.text = "Press E";
             }
@@ -113,9 +123,21 @@ public class Cuisine : MonoBehaviour
                     pileString.Push(Salade);
                     spawnFood.Spawn(prefabSalade, pileGameObject);
                 }
-                if (pnjManager.PNJFileAttenteComptoir.Peek() != null)
+                //if (pnjManager.PNJFileAttenteComptoir.Peek() != null)
+                //{
+                //    StartCoroutine(CommandePriseCoroutine());
+                //}
+
+                if (hit.transform.gameObject == poubelleInterieur && !poubelleInInventory)
                 {
-                    StartCoroutine(CommandePriseCoroutine());
+                    poubelleImage.enabled = true;
+                    poubelleInInventory = true;
+                }
+                if (hit.transform.gameObject == poubelleExterieur && poubelleInInventory)
+                {
+                    poubelleImage.enabled = false;
+                    poubelleInInventory = false;
+                    poubelle.resetPoubelle();
                 }
             }
 

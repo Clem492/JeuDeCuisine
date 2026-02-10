@@ -19,7 +19,7 @@ public class Commande : MonoBehaviour
     [SerializeField] Texture imageSimple, imageChampi, imageMax;
     [SerializeField] RawImage commande1, commande2, commande3;
 
-    [SerializeField] TextMeshProUGUI argentText;
+   
 
     private List<Stack<string>> stackRecette;
 
@@ -171,7 +171,7 @@ public class Commande : MonoBehaviour
                 Debug.Log("bonne commande");
                 GameManager.instance.argent += 25;
                 fileCommande.Dequeue();
-                argentText.text = "argent : " + GameManager.instance.argent;
+                
 
                 //reset de la pile
                 cuisine.ResetPile();
@@ -186,7 +186,7 @@ public class Commande : MonoBehaviour
             else
             {
                 GameManager.instance.argent -= 25;
-                argentText.text = "argent : " + GameManager.instance.argent;
+                
                 fileCommande.Dequeue();
 
                 //reset de la pile

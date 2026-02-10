@@ -82,4 +82,11 @@ public class Poubelle : MonoBehaviour
             StartCoroutine(LooseMoneyGarbage());
         }
     }
+
+    public void resetPoubelle()
+    {
+        garbagePourcentage = 0;
+        textPourcentage.text = garbagePourcentage + "% / 100%";
+        ChangeColor();
+    }
 }
