@@ -4,6 +4,9 @@ using UnityEngine;
 public class SpawnFood : MonoBehaviour
 {
     [SerializeField] Cuisine cuisine;
+    [SerializeField] GameObject plat;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void OnDrawGizmos()
@@ -14,13 +17,13 @@ public class SpawnFood : MonoBehaviour
     public void Spawn(GameObject go , Stack<GameObject> pileGo)
     {
         RaycastHit hit;
-
+        GameObject temp;
        
         Physics.Raycast(transform.position, Vector3.down, out hit, 25);
         
         if(go.CompareTag("Pain") && cuisine.sensPain == true)
         {
-            pileGo.Push(Instantiate(go, hit.point, Quaternion.Euler(180, 0, 0)));
+              pileGo.Push(Instantiate(go, hit.point, Quaternion.Euler(180, 0, 0)));
         }
          else if (go.CompareTag("Viande"))
         {
@@ -31,7 +34,7 @@ public class SpawnFood : MonoBehaviour
             //instancie le game object
             pileGo.Push(Instantiate(go, new Vector3(hit.point.x, hit.point.y, hit.point.z), Quaternion.identity));
         }
-            
+         pileGo.Peek().transform.SetParent(plat.transform);   
         
         
     }
