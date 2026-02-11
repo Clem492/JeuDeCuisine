@@ -170,6 +170,7 @@ public class PNJScript : MonoBehaviour
         yield return new WaitUntil(() => Vector3.Distance(transform.position, startPosition) <=1);
         gameObject.SetActive(false);
     }
+    
 
 
 }

@@ -38530,10 +38530,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plat
       objectReference: {fileID: 0}
-    - target: {fileID: 2217705101230772771, guid: 8a5e04e92b1fbe547b46dd85817b2d52, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4723351875985466887, guid: 8a5e04e92b1fbe547b46dd85817b2d52, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.389
@@ -51238,6 +51234,7 @@ MonoBehaviour:
   pnjManager: {fileID: 648684796}
   commandePrise: 0
   camion: {fileID: 1202413953}
+  portePlat: 0
 --- !u!4 &2139504273 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1927095934725912877, guid: a9b081014bad86f4a80b60284279d21b, type: 3}
