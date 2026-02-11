@@ -11,11 +11,5 @@ public class borne : MonoBehaviour
 
    
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("PNJ"))
-        {
-            borneOccuper = false;
-        }
-    }
+   
 }
