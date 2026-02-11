@@ -1,4 +1,6 @@
+using SojaExiles;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class Deplacementcam : MonoBehaviour
@@ -8,6 +10,7 @@ public class Deplacementcam : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
         transform.position = new Vector3(transform.position.x,transform.position.y,zMin);
     }
 

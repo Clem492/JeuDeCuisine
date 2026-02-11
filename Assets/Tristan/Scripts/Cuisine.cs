@@ -44,6 +44,8 @@ public class Cuisine : MonoBehaviour
 
     [SerializeField] PNJManager pnjManager;
     public bool commandePrise;
+
+    [SerializeField] Camion camion;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -138,6 +140,7 @@ public class Cuisine : MonoBehaviour
                     poubelleImage.enabled = false;
                     poubelleInInventory = false;
                     poubelle.resetPoubelle();
+                    camion.RetirerPoubelle();
                 }
             }
 
