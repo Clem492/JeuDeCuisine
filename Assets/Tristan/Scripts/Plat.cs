@@ -6,10 +6,13 @@ public class Plat : MonoBehaviour
 {
     private BoxCollider collider;
     private Rigidbody rb;
-    Stack<GameObject> pileBurger = new Stack<GameObject>();
-
+    private Ray ray;
+    private Stack<GameObject> pileBurger = new Stack<GameObject>();
+    private Collider[] tabSphere;
+    private Cuisine cuisine;
     private void Start()
     {
+        cuisine= GameObject.FindWithTag("Player").GetComponent<Cuisine>();
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<BoxCollider>();
     }
@@ -27,16 +30,19 @@ public class Plat : MonoBehaviour
         collider.center = center;
     }
 
-    private void Update()
+    public void PNJRecup()
     {
-        rb.linearVelocity = Vector3.zero;
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("PNJ"))
+        tabSphere = Physics.OverlapSphere(transform.position, 4);
+        
+        foreach(Collider co in tabSphere)
         {
-            Debug.Log("bro what are you doing");
-            GameObject.FindWithTag("Player").GetComponent<Cuisine>().valider();
+            if (co.transform.gameObject.CompareTag("PNJ"))
+            {
+                Debug.Log("c'est validé mon gas !!");
+                cuisine.valider();
+                Destroy(gameObject);
+            }
         }
     }
+    
 }

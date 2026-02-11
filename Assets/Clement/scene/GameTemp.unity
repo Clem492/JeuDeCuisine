@@ -38531,6 +38531,10 @@ PrefabInstance:
       value: Plat
       objectReference: {fileID: 0}
     - target: {fileID: 2217705101230772771, guid: 8a5e04e92b1fbe547b46dd85817b2d52, type: 3}
+      propertyPath: m_Size.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217705101230772771, guid: 8a5e04e92b1fbe547b46dd85817b2d52, type: 3}
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}

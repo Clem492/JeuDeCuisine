@@ -47,7 +47,8 @@ public class Cuisine : MonoBehaviour
 
     [SerializeField] Camion camion;
    
-    private bool portePlat;
+   
+    public bool portePlat;
     private GameObject platTransporter;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -154,19 +155,27 @@ public class Cuisine : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Mouse0) && !portePlat)
             {
+                
                 if (hit.transform.gameObject.CompareTag("Plat"))
                 {
                     hit.transform.gameObject.GetComponent<Plat>().RecupererStack(pileGameObject);
                     hit.transform.SetParent(gameObject.transform);
-                    
+                    hit.transform.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+
+
                     portePlat = true;
                     platTransporter = hit.transform.gameObject;
+                    
+
                 }
             }
             else if (Input.GetKeyDown(KeyCode.Mouse0) && portePlat)
             {
+                
                 platTransporter.transform.SetParent(null);
                 portePlat = false;
+                platTransporter.GetComponent<Rigidbody>().isKinematic = false;
+                StartCoroutine(Yo());
             }
 
 
@@ -181,6 +190,11 @@ public class Cuisine : MonoBehaviour
         
         
 
+    }
+    IEnumerator Yo()
+    {
+        yield return new WaitForEndOfFrame();
+        platTransporter.GetComponent<Plat>().PNJRecup();
     }
 
     private void retirer()
