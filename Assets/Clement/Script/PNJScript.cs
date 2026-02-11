@@ -150,6 +150,7 @@ public class PNJScript : MonoBehaviour
                 yield return new WaitForEndOfFrame();
                 transform.localPosition = Vector3.zero;
                 transform.localRotation = Quaternion.Euler(0,0,0);
+                yield return new WaitForSeconds(100000000000000);
                 //attendre pour manger
                 //faut décrémenter le burger
                 yield return new WaitForSeconds(TimeToEat);
