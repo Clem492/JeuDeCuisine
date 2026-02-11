@@ -15,6 +15,7 @@ public class PNJManager : MonoBehaviour
 
     public int indicePnj;
 
+    public Queue<int> PNJFileAttenteBorne = new Queue<int>();
     public Queue<int> PNJFileAttenteComptoir = new Queue<int>();
     
 
@@ -38,14 +39,21 @@ public class PNJManager : MonoBehaviour
 
     private void Start()
     {
-
+        if (instance  == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         StartCoroutine(SpawnPNJ());
         
     }
 
     private void Update()
     {
-        Debug.LogError(PNJFileAttenteComptoir.Count);
+        Debug.Log(PNJFileAttenteBorne.Count);
     }
 
     private IEnumerator SpawnPNJ()
@@ -68,6 +76,7 @@ public class PNJManager : MonoBehaviour
                         Debug.LogWarning("impossible d'avoir accès au PNJScript");
                     }else
                     {
+                        PNJFileAttenteBorne.Enqueue(pnjPool[index].GetComponent<PNJScript>().indicePnj);
                         PNJFileAttenteComptoir.Enqueue(pnjPool[index].GetComponent<PNJScript>().indicePnj);
                     }
 
