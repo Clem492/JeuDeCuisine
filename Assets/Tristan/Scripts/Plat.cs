@@ -29,10 +29,10 @@ public class Plat : MonoBehaviour
         collider.size = size;
         collider.center = center;
     }
-
+    
     public void PNJRecup()
     {
-        tabSphere = Physics.OverlapSphere(transform.position, 4);
+        tabSphere = Physics.OverlapSphere(transform.position, 6);
         
         foreach(Collider co in tabSphere)
         {

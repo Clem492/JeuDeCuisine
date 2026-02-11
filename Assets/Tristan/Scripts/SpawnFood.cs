@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class SpawnFood : MonoBehaviour
 {
-    [SerializeField] Cuisine cuisine;
-    [SerializeField] GameObject plat;
+    [SerializeField]private Cuisine cuisine;
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -14,7 +14,7 @@ public class SpawnFood : MonoBehaviour
         Debug.DrawRay(transform.position, new Vector3(0, -25, 0), Color.red);
     }
 
-    public void Spawn(GameObject go , Stack<GameObject> pileGo)
+    public void Spawn(GameObject go , Stack<GameObject> pileGo,GameObject plat)
     {
         RaycastHit hit;
         GameObject temp;

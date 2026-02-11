@@ -46,13 +46,20 @@ public class Cuisine : MonoBehaviour
     public bool commandePrise;
 
     [SerializeField] Camion camion;
-   
-   
+    private GameObject plat;
+    private Vector3 posPlat;
+    [SerializeField] GameObject platPrefab;
+
     public bool portePlat;
     private GameObject platTransporter;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        
+        plat = GameObject.FindWithTag("Plat");
+        posPlat = plat.transform.position;
+        plat.GetComponent<Rigidbody>().isKinematic = true;
+
         portePlat = false;
         poubelleImage.enabled = false;
         poubelleInInventory = false;
@@ -108,11 +115,11 @@ public class Cuisine : MonoBehaviour
                     listPainDansPile.Add(Pain);
                     if (sensPain)
                     {
-                        spawnFood.Spawn(prefabPainBas, pileGameObject);
+                        spawnFood.Spawn(prefabPainBas, pileGameObject, plat);
                     }
                     else
                     {
-                        spawnFood.Spawn(prefabPainHaut, pileGameObject);
+                        spawnFood.Spawn(prefabPainHaut, pileGameObject, plat);
                     }
                     
 
@@ -121,17 +128,17 @@ public class Cuisine : MonoBehaviour
                 if (hit.transform.gameObject.CompareTag(Viande))
                 {
                     pileString.Push(Viande);
-                    spawnFood.Spawn(prefabSteak, pileGameObject);
+                    spawnFood.Spawn(prefabSteak, pileGameObject, plat);
                 }
                 if (hit.transform.gameObject.CompareTag(Champignon))
                 {
                     pileString.Push(Champignon);
-                    spawnFood.Spawn(prefabChampi, pileGameObject);
+                    spawnFood.Spawn(prefabChampi, pileGameObject,plat);
                 }
                 if (hit.transform.gameObject.CompareTag(Salade))
                 {
                     pileString.Push(Salade);
-                    spawnFood.Spawn(prefabSalade, pileGameObject);
+                    spawnFood.Spawn(prefabSalade, pileGameObject, plat);
                 }
                 if (comptoir.ComptoirOccuper)
                 {
@@ -158,9 +165,9 @@ public class Cuisine : MonoBehaviour
                 
                 if (hit.transform.gameObject.CompareTag("Plat"))
                 {
-                    hit.transform.gameObject.GetComponent<Plat>().RecupererStack(pileGameObject);
-                    hit.transform.SetParent(gameObject.transform);
-                    hit.transform.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                    plat.GetComponent<Plat>().RecupererStack(pileGameObject);
+                    plat.transform.SetParent(gameObject.transform);
+                    plat.GetComponent<Rigidbody>().isKinematic = true;
 
 
                     portePlat = true;
@@ -221,8 +228,9 @@ public class Cuisine : MonoBehaviour
     {
         //valider la commande
         
-            commande.CommandeTerminer(pileString);
-        
+        commande.CommandeTerminer(pileString);
+        plat = Instantiate(platPrefab,posPlat,Quaternion.identity);
+        plat.GetComponent<Rigidbody>().isKinematic = true;
     }
     
     public void ResetPile()
