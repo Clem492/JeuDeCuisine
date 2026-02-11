@@ -7420,6 +7420,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7e49df0e776c1614da368ac187d54ce0, type: 3}
+      propertyPath: m_TagString
+      value: PNJ
+      objectReference: {fileID: 0}
     - target: {fileID: 955260670426400693, guid: 7e49df0e776c1614da368ac187d54ce0, type: 3}
       propertyPath: m_DirtyAABB
       value: 0
@@ -12829,6 +12833,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e49df0e776c1614da368ac187d54ce0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 188832562855098571}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e49df0e776c1614da368ac187d54ce0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -615036452618788503}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e49df0e776c1614da368ac187d54ce0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -3862223952791238105}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e49df0e776c1614da368ac187d54ce0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1145712276499672555}
   m_SourcePrefab: {fileID: 100100000, guid: 7e49df0e776c1614da368ac187d54ce0, type: 3}
 --- !u!137 &12832405639086962 stripped
 SkinnedMeshRenderer:
@@ -14709,6 +14722,71 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-615036452618788503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890602832574264186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba566862f1258ee4dbcac99a79391559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimeToEat: 15
+  TimeChooseCommand: 20
+  TimeDropTrash: 2
+  chaisePosition: []
+  indicePnj: 1
+--- !u!65 &-3862223952791238105
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890602832574264186}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &1145712276499672555
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890602832574264186}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!137 &5905930227801721954 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: -8320156766785535415, guid: 7e49df0e776c1614da368ac187d54ce0, type: 3}

@@ -34,12 +34,15 @@ public class PNJScript : MonoBehaviour
         cuisine = GameObject.FindGameObjectWithTag("Player").GetComponent<Cuisine>();
         bin = GameObject.FindWithTag("bin");
         startPosition = transform.position;
+
+        
+
     }
 
     void Start()
     {
 
-        StartCoroutine(Attente());
+        StartCoroutine(Commander());
     }
 
 
@@ -50,48 +53,40 @@ public class PNJScript : MonoBehaviour
     //il va s'assoir et attend ça commande et mange
     //va deposer son plateau et resort 
 
-    private IEnumerator Attente()
-    {
-        yield return new WaitForSeconds(indicePnj);
-        StartCoroutine(Commander());
-    }
+
 
     private IEnumerator Commander()
     {
 
-        for (int i = 0; i < indicePnj *100; i++)
-        {
-            yield return new WaitForEndOfFrame();
-        }
-        
-        if (!borne[0].GetComponent<borne>().borneOccuper)
-        {
+       if (!borne[0].GetComponent<borne>().borneOccuper)
+       {
             borne[0].GetComponent<borne>().borneOccuper = true;
             pnjNavMeshAgent.SetDestination(borne[0].transform.position);
-            yield break;
-        }
-        else if (!borne[1].GetComponent<borne>().borneOccuper)
-        {
+       }
+       else if (!borne[1].GetComponent<borne>().borneOccuper)
+       {
             borne[1].GetComponent<borne>().borneOccuper = true;
             pnjNavMeshAgent.SetDestination(borne[1].transform.position);
-            yield break;
-        }
-        else if (borne[0].GetComponent<borne>().borneOccuper && borne[1].GetComponent<borne>().borneOccuper)
-        {
-            pnjNavMeshAgent.SetDestination(gameObject.transform.position);
-            yield return new WaitUntil(() => !borne[0].GetComponent<borne>().borneOccuper || !borne[1].GetComponent<borne>().borneOccuper);
-            if (!borne[0].GetComponent<borne>().borneOccuper)
+       }
+       else if (borne[0].GetComponent<borne>().borneOccuper && borne[1].GetComponent<borne>().borneOccuper)
+       {
+            pnjNavMeshAgent.SetDestination(transform.position);
+            yield return new WaitUntil(() => !borne[0].GetComponent<borne>().borneOccuper || !borne[1].GetComponent<borne>().borneOccuper && indicePnj == PNJManager.instance.PNJFileAttenteComptoir.Peek());
+            if (!borne[0].GetComponent<borne>().borneOccuper) 
             {
+                Debug.LogError("hein");
+                PNJManager.instance.PNJFileAttenteComptoir.Dequeue();
                 borne[0].GetComponent<borne>().borneOccuper = true;
                 pnjNavMeshAgent.SetDestination(borne[0].transform.position);
             }
-            if (!borne[1].GetComponent<borne>().borneOccuper)
+            
+            else if (!borne[1].GetComponent<borne>().borneOccuper)
             {
+                PNJManager.instance.PNJFileAttenteComptoir.Dequeue();
                 borne[1].GetComponent<borne>().borneOccuper = true;
                 pnjNavMeshAgent.SetDestination(borne[1].transform.position);
             }
-
-        }
+       }
 
         yield return new WaitUntil(() => Vector3.Distance(transform.position, pnjNavMeshAgent.destination) < 1);
         //attend 5 second avant d'aller au comptoir 
