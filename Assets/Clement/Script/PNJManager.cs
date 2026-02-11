@@ -15,33 +15,38 @@ public class PNJManager : MonoBehaviour
 
     public int indicePnj;
 
-    public Queue<GameObject> PNJFileAttenteComptoir;
+    public Queue<int> PNJFileAttenteComptoir = new Queue<int>();
     
 
     //système de pool pour les pnj 
     public int poolSize;
     private GameObject[] pnjPool;
     private int poolIndex;
+    private GameObject pnjPrefab;
 
 
     private void Awake()
     {
-        pnj = GameObject.FindGameObjectsWithTag("PNJ");
-        Debug.Log(pnj.Length);
-        foreach (GameObject p in pnj)
+        pnjPool = new GameObject[poolSize];
+        for (int i = 0; i < poolSize; i++)
         {
-            p.GetComponent<PNJScript>().indicePnj = indicePnj;
-            indicePnj++;
+            pnjPool[i] = Instantiate(pnj[i]);
+            pnjPool[i].SetActive(false);
+
         }
     }
 
     private void Start()
     {
-   
 
+        StartCoroutine(SpawnPNJ());
+        
     }
 
-
+    private void Update()
+    {
+        Debug.LogError(PNJFileAttenteComptoir.Count);
+    }
 
     private IEnumerator SpawnPNJ()
     {
@@ -54,9 +59,18 @@ public class PNJManager : MonoBehaviour
 
                 if (!pnjPool[index].activeSelf)
                 {
+                    
                     pnjPool[index].transform.position = PNJSpawnPoint.position;
                     pnjPool[index].transform.rotation = Quaternion.identity;
                     pnjPool[index].SetActive(true);
+                    if (pnjPool[index].GetComponent<PNJScript>() == null)
+                    {
+                        Debug.LogWarning("impossible d'avoir accès au PNJScript");
+                    }else
+                    {
+                        PNJFileAttenteComptoir.Enqueue(pnjPool[index].GetComponent<PNJScript>().indicePnj);
+                    }
+
                     poolIndex = (index + 1) % poolSize;
                     break; //sortir après avoir trouvé un missile 
                 }
