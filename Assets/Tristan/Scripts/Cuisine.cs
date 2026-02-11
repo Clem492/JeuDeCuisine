@@ -46,6 +46,8 @@ public class Cuisine : MonoBehaviour
     public bool commandePrise;
 
     [SerializeField] Camion camion;
+    [SerializeField] Plat plat;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -58,6 +60,9 @@ public class Cuisine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
+
 
         //recupéré la nourriture
         RaycastHit hit;
@@ -189,13 +194,14 @@ public class Cuisine : MonoBehaviour
     
     public void ResetPile()
     {
+        plat.RecupererStack(pileGameObject);
         listPainDansPile.Clear();
         pileString.Clear();
-        while(pileGameObject.Count>0)
-        {
-            GameObject temp =pileGameObject.Pop();
-            Destroy(temp);
-        }
+        //while(pileGameObject.Count>0)
+        //{
+        //    GameObject temp =pileGameObject.Pop();
+        //    Destroy(temp);
+        //}
     }
 
     private IEnumerator CommandePriseCoroutine()
