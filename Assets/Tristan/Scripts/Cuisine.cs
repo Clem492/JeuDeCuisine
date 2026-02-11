@@ -46,11 +46,13 @@ public class Cuisine : MonoBehaviour
     public bool commandePrise;
 
     [SerializeField] Camion camion;
-    [SerializeField] Plat plat;
-    
+   
+    private bool portePlat;
+    private GameObject platTransporter;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        portePlat = false;
         poubelleImage.enabled = false;
         poubelleInInventory = false;
         instruction.text = "";
@@ -149,14 +151,31 @@ public class Cuisine : MonoBehaviour
                 }
             }
 
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !portePlat)
+            {
+                if (hit.transform.gameObject.CompareTag("Plat"))
+                {
+                    hit.transform.gameObject.GetComponent<Plat>().RecupererStack(pileGameObject);
+                    hit.transform.SetParent(gameObject.transform);
+                    
+                    portePlat = true;
+                    platTransporter = hit.transform.gameObject;
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.Mouse0) && portePlat)
+            {
+                platTransporter.transform.SetParent(null);
+                portePlat = false;
+            }
 
-            
 
-            
+
+
+
         }
-
+        
         retirer();
-        valider();
+        
 
         
         
@@ -183,25 +202,24 @@ public class Cuisine : MonoBehaviour
         }
     }
 
-    private void valider()
+    public void valider()
     {
         //valider la commande
-        if (Input.GetKeyDown(KeyCode.R))
-        {
+        
             commande.CommandeTerminer(pileString);
-        }
+        
     }
     
     public void ResetPile()
     {
-        plat.RecupererStack(pileGameObject);
+        
         listPainDansPile.Clear();
         pileString.Clear();
-        //while(pileGameObject.Count>0)
-        //{
-        //    GameObject temp =pileGameObject.Pop();
-        //    Destroy(temp);
-        //}
+        while (pileGameObject.Count > 0)
+        {
+            GameObject temp = pileGameObject.Pop();
+           // Destroy(temp);
+        }
     }
 
     private IEnumerator CommandePriseCoroutine()
