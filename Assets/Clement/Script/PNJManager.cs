@@ -53,7 +53,15 @@ public class PNJManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(PNJFileAttenteBorne.Count);
+        try
+        {
+            Debug.Log(PNJFileAttenteComptoir.Peek());
+        }
+        catch
+        {
+            Debug.Log("il n'y a rien dans la file");
+        }
+        
     }
 
     private IEnumerator SpawnPNJ()
@@ -77,7 +85,7 @@ public class PNJManager : MonoBehaviour
                     }else
                     {
                         PNJFileAttenteBorne.Enqueue(pnjPool[index].GetComponent<PNJScript>().indicePnj);
-                        PNJFileAttenteComptoir.Enqueue(pnjPool[index].GetComponent<PNJScript>().indicePnj);
+                       
                     }
 
                     poolIndex = (index + 1) % poolSize;

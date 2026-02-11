@@ -103,45 +103,19 @@ public class PNJScript : MonoBehaviour
         yield return new WaitUntil(() => Vector3.Distance(transform.position, pnjNavMeshAgent.destination) < 1);
         //attend 5 second avant d'aller au comptoir 
         yield return new WaitForSeconds(TimeChooseCommand);
+        PNJManager.instance.PNJFileAttenteComptoir.Enqueue(indicePnj);
 
 
-
-        yield return new WaitUntil(() => !comptoirPosition[0].GetComponent<ComptoirPosition>().ComptoirOccuper || !comptoirPosition[1].GetComponent<ComptoirPosition>().ComptoirOccuper && (indicePnj == PNJManager.instance.PNJFileAttenteComptoir.Peek() || indicePnj == PNJManager.instance.PNJFileAttenteComptoir.ElementAt(1)));
-
+        yield return new WaitUntil(() => !comptoirPosition[0].GetComponent<ComptoirPosition>().ComptoirOccuper && indicePnj == PNJManager.instance.PNJFileAttenteComptoir.Peek());
         if (!comptoirPosition[0].GetComponent<ComptoirPosition>().ComptoirOccuper)
         {
-            PNJManager.instance.PNJFileAttenteComptoir.Dequeue();
             comptoirPosition[0].GetComponent<ComptoirPosition>().ComptoirOccuper = true;
             if (borneOccuper0) borne[0].GetComponent<borne>().borneOccuper = false;
             else if (borneOccuper1) borne[1].GetComponent<borne>().borneOccuper = false;
             pnjNavMeshAgent.SetDestination(comptoirPosition[0].transform.position);
 
         }
-        else if (!comptoirPosition[1].GetComponent<ComptoirPosition>().ComptoirOccuper)
-        {
-            PNJManager.instance.PNJFileAttenteComptoir.Dequeue();
-            if (borneOccuper0) borne[0].GetComponent<borne>().borneOccuper = false;
-            else if (borneOccuper1) borne[1].GetComponent<borne>().borneOccuper = false;
-            comptoirPosition[1].GetComponent<ComptoirPosition>().ComptoirOccuper = true;
-            pnjNavMeshAgent.SetDestination(comptoirPosition[1].transform.position);
-            yield return new WaitUntil(() => !comptoirPosition[0].GetComponent<ComptoirPosition>().ComptoirOccuper);
-            comptoirPosition[0].GetComponent<ComptoirPosition>().ComptoirOccuper = true;
-            comptoirPosition[1].GetComponent<ComptoirPosition>().ComptoirOccuper = false;
-            pnjNavMeshAgent.SetDestination(comptoirPosition[0].transform.position);
-        }
-        /*else if (comptoirPosition[0].GetComponent<ComptoirPosition>().ComptoirOccuper && comptoirPosition[1].GetComponent<ComptoirPosition>().ComptoirOccuper && indicePnj == PNJManager.instance.PNJFileAttenteComptoir.Peek())
-        {
-
-            yield return new WaitUntil(() => !comptoirPosition[1].GetComponent<ComptoirPosition>().ComptoirOccuper);
-            if (borneOccuper0) borne[0].GetComponent<borne>().borneOccuper = false;
-            else if (borneOccuper1) borne[1].GetComponent<borne>().borneOccuper = false;
-            comptoirPosition[1].GetComponent<ComptoirPosition>().ComptoirOccuper = true;
-            pnjNavMeshAgent.SetDestination(comptoirPosition[1].transform.position);
-            yield return new WaitUntil(() => !comptoirPosition[0].GetComponent<ComptoirPosition>().ComptoirOccuper);
-            comptoirPosition[1].GetComponent<ComptoirPosition>().ComptoirOccuper = false;
-            comptoirPosition[0].GetComponent<ComptoirPosition>().ComptoirOccuper = true;
-            pnjNavMeshAgent.SetDestination(comptoirPosition[1].transform.position);
-        }*/
+        
 
 
         //attend que le joueur prend la commande du pnj
@@ -163,6 +137,7 @@ public class PNJScript : MonoBehaviour
             }
             if (!chaisePosition[i].GetComponent<chaisePosition>().chaiseOccuper)
             {
+                chaisePosition[i].GetComponent<chaisePosition>().chaiseOccuper = true;
                 comptoirPosition[0].GetComponent<ComptoirPosition>().ComptoirOccuper = false;
 
                 Debug.Log("les chaise ne sont pas occuper je vais m'assoir");
@@ -181,7 +156,7 @@ public class PNJScript : MonoBehaviour
                 transform.SetParent(null);
                 transform.position = chaisePosition[i].transform.position;
                 pnjNavMeshAgent.enabled = true;
-
+                chaisePosition[i].GetComponent<chaisePosition>().chaiseOccuper = false;
                 break;
             }
         }

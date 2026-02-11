@@ -225,7 +225,7 @@ public class Cuisine : MonoBehaviour
 
     private IEnumerator CommandePriseCoroutine()
     {
-        Debug.Log("commande prise");
+
         commandePrise = true;
         yield return new WaitForSeconds(1);
         commandePrise = false;
