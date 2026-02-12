@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Poubelle : MonoBehaviour
 {
-
+    public static Poubelle instance;
     [SerializeField] private TextMeshProUGUI textPourcentage;
     public int garbagePourcentage;
     private bool antiSpamCoroutine;
@@ -13,7 +13,16 @@ public class Poubelle : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        antiSpamCoroutine = true;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+            antiSpamCoroutine = true;
         garbagePourcentage = 0;
         textPourcentage.text = garbagePourcentage + "% ";
         ChangeColor();
@@ -70,12 +79,7 @@ public class Poubelle : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            garbagePourcentage += 5;
-            ChangeColor();
-            textPourcentage.text = garbagePourcentage + "%";
-        }
+       
         if (garbagePourcentage >= 100 && antiSpamCoroutine)
         {
             antiSpamCoroutine = false;

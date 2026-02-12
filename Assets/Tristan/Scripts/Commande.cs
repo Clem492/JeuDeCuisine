@@ -9,7 +9,7 @@ public class Commande : MonoBehaviour
 {
     //file
     Queue<string> fileCommande;
-
+    public Queue<GameObject> fileClients = new Queue<GameObject>();
     //public int argent = 0;
     string[] tabCommande;
     //dictionaire
@@ -80,6 +80,8 @@ public class Commande : MonoBehaviour
         dicoCommandePossible.Add("BurgerSimple", stackRecette[1] );
         dicoCommandePossible.Add("BurgerMax", stackRecette[2]);
 
+        
+
         //tableau avec les plats possibles
         tabCommande = new string[dicoCommandePossible.Count];
         int i = 0;
@@ -100,12 +102,7 @@ public class Commande : MonoBehaviour
     void Update()
     {
         //limite le nombre de commande
-        if(fileCommande.Count <  3 && waitCommande==false)
-        {
-            waitCommande = true;
-            AjoutCommande();
-        }
-
+       
         ChangeImage();
 
         
@@ -117,6 +114,10 @@ public class Commande : MonoBehaviour
     private void ChangeImage()
     {
         //image des commandes
+        if (fileCommande.Count == 0)
+        {
+            commande1.texture = null;
+        } 
         if (fileCommande.Count > 0)
         {
             commande1.texture = dicoImageCommande[fileCommande.Peek()];
@@ -129,6 +130,14 @@ public class Commande : MonoBehaviour
         {
             commande3.texture = dicoImageCommande[fileCommande.ElementAt(2)];
         }
+        if (fileCommande.Count == 1)
+        {
+            commande2.texture = null;
+        }
+        if (fileCommande.Count == 2)
+        {
+            commande3.texture = null;
+        }
     }
 
     //wait avant de refaire une commande
@@ -138,8 +147,9 @@ public class Commande : MonoBehaviour
         waitCommande = false;
     }
 
-    private void AjoutCommande()
+    public void AjoutCommande(GameObject client)
     {
+        fileClients.Enqueue(client);
         //chiffre aléatoire
         int rand = Random.Range(0, dicoCommandePossible.Count);
 
@@ -155,6 +165,7 @@ public class Commande : MonoBehaviour
 
         if(platPreparer.Count > 0)
         {
+            fileClients.Peek().GetComponent<PNJScript>().commandeRecu = true;
             int i;
 
             //vérifie que c'est exactement la meme pile
@@ -171,6 +182,7 @@ public class Commande : MonoBehaviour
                 Debug.Log("bonne commande");
                 GameManager.instance.argent += 25;
                 fileCommande.Dequeue();
+                fileClients.Dequeue();
                 
 
                 //reset de la pile
@@ -191,6 +203,7 @@ public class Commande : MonoBehaviour
 
                 //reset de la pile
                 cuisine.ResetPile();
+                fileClients.Dequeue();
                 StartCoroutine(AfficheIconeEchec());
                 for (int y = 0; y < tabClient.Length; y++)
                 {

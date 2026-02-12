@@ -18,9 +18,9 @@ public class PNJScript : MonoBehaviour
     public GameObject[] chaisePosition;
     private GameObject bin;
     private Cuisine cuisine;
-
+    private Commande commande;
     private Vector3 startPosition;
-
+    public bool commandeRecu = false;
 
    
 
@@ -34,6 +34,7 @@ public class PNJScript : MonoBehaviour
         chaisePosition = GameObject.FindGameObjectsWithTag("chaise");
         cuisine = GameObject.FindGameObjectWithTag("Player").GetComponent<Cuisine>();
         bin = GameObject.FindWithTag("bin");
+        commande = GameObject.FindWithTag("commande").GetComponent<Commande>();
         startPosition = transform.position;
 
         
@@ -120,6 +121,7 @@ public class PNJScript : MonoBehaviour
 
         //attend que le joueur prend la commande du pnj
         yield return new WaitUntil(() => cuisine.commandePrise && Vector3.Distance(gameObject.transform.position, comptoirPosition[0].transform.position) <= 1 && indicePnj == PNJManager.instance.PNJFileAttenteComptoir.Peek());
+        commande.AjoutCommande(gameObject);
         comptoirPosition[0].GetComponent<ComptoirPosition>().ComptoirOccuper = false;
         PNJManager.instance.PNJFileAttenteComptoir.Dequeue();
         for (int i = 0; i < chaisePosition.Length; i++)
@@ -152,7 +154,7 @@ public class PNJScript : MonoBehaviour
                 yield return new WaitForEndOfFrame();
                 transform.localPosition = Vector3.zero;
                 transform.localRotation = Quaternion.Euler(0,0,0);
-                yield return new WaitForSeconds(10000000);
+                yield return new WaitUntil(() => commandeRecu );
                 //attendre pour manger
                 //faut décrémenter le burger
                 yield return new WaitForSeconds(TimeToEat);
@@ -168,9 +170,13 @@ public class PNJScript : MonoBehaviour
         
         yield return new WaitUntil(() => !bin.GetComponent<binPosition>().binOccuper && indicePnj == PNJManager.instance.PNJFileAttentePoubelle.Peek());
         bin.GetComponent<binPosition>().binOccuper = true;
+        //=====================
+        //      Poubelle
+        //=====================
         pnjNavMeshAgent.SetDestination(bin.transform.position);
         yield return new WaitUntil(() => Vector3.Distance(transform.position, pnjNavMeshAgent.destination) <= 1);
         yield return new WaitForSeconds(TimeDropTrash);
+        Poubelle.instance.AddGarbage();
         bin.GetComponent<binPosition>().binOccuper = false;
         PNJManager.instance.PNJFileAttentePoubelle.Dequeue();
         pnjNavMeshAgent.SetDestination(startPosition);

@@ -52,6 +52,8 @@ public class Cuisine : MonoBehaviour
 
     public bool portePlat;
     private GameObject platTransporter;
+
+    [SerializeField] SpawnStock spawnStock;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -122,37 +124,66 @@ public class Cuisine : MonoBehaviour
                 //ont regarde quelle ellement ont veut ajouter
                 if (hit.transform.gameObject.CompareTag(Pain))
                 {
-
-                    pileString.Push(Pain);
-                    listPainDansPile.Add(Pain);
-                    if (sensPain)
+                    if (spawnStock.pain.Count > 0)
                     {
-                        spawnFood.Spawn(prefabPainBas, pileGameObject, plat);
+                        GameObject ingredientsToDestroy = spawnStock.pain.Pop();
+                        Destroy(ingredientsToDestroy);
+                        pileString.Push(Pain);
+                        listPainDansPile.Add(Pain);
+                        if (sensPain)
+                        {
+                            spawnFood.Spawn(prefabPainBas, pileGameObject, plat);
+                        }
+                        else
+                        {
+                            spawnFood.Spawn(prefabPainHaut, pileGameObject, plat);
+                        }
                     }
-                    else
-                    {
-                        spawnFood.Spawn(prefabPainHaut, pileGameObject, plat);
-                    }
+                    
 
 
 
                 }
                 if (hit.transform.gameObject.CompareTag(Viande))
                 {
-                    pileString.Push(Viande);
-                    spawnFood.Spawn(prefabSteak, pileGameObject, plat);
+                    if (spawnStock.steack.Count > 0)
+                    {
+                        GameObject ingredientsToDestroy = spawnStock.steack.Pop();
+                        Destroy(ingredientsToDestroy);
+                        pileString.Push(Viande);
+                        spawnFood.Spawn(prefabSteak, pileGameObject, plat);
+                    }
+                   
                 }
+
                 if (hit.transform.gameObject.CompareTag(Champignon))
                 {
-                    pileString.Push(Champignon);
-                    spawnFood.Spawn(prefabChampi, pileGameObject, plat);
+                    if (spawnStock.champi.Count > 0)
+                    {
+                        GameObject ingredientsToDestroy = spawnStock.champi.Pop();
+                        Destroy(ingredientsToDestroy);
+                        pileString.Push(Champignon);
+                        spawnFood.Spawn(prefabChampi, pileGameObject, plat);
+                    }
+                   
                 }
+
+
                 if (hit.transform.gameObject.CompareTag(Salade))
                 {
-                    pileString.Push(Salade);
-                    spawnFood.Spawn(prefabSalade, pileGameObject, plat);
+                    if (spawnStock.salade.Count > 0)
+                    {
+                        GameObject ingredientsToDestroy = spawnStock.salade.Pop();
+                        Destroy(ingredientsToDestroy);
+                        pileString.Push(Salade);
+                        spawnFood.Spawn(prefabSalade, pileGameObject, plat);
+                    }
+                   
                 }
-                if (comptoir.ComptoirOccuper)
+
+
+
+                if (comptoir.ComptoirOccuper && hit.transform.CompareTag("borneComptoir"))
                 {
                     
                     StartCoroutine(CommandePriseCoroutine());
@@ -178,7 +209,7 @@ public class Cuisine : MonoBehaviour
                 if (hit.transform.gameObject.CompareTag("Plat"))
                 {
                     plat.GetComponent<Plat>().RecupererStack(pileGameObject);
-                    plat.transform.SetParent(gameObject.transform);
+                    plat.transform.SetParent(cam.transform);
                     plat.GetComponent<Rigidbody>().isKinematic = true;
 
 

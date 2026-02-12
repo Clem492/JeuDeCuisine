@@ -2250,6 +2250,7 @@ MonoBehaviour:
   TimeChooseCommand: 5
   TimeDropTrash: 1
   chaisePosition: []
+  commandeRecu: 0
   indicePnj: 5
 --- !u!65 &-4197126670428025137
 BoxCollider:
@@ -2266,12 +2267,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &8415148178301207769
 Rigidbody:
   m_ObjectHideFlags: 0

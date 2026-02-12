@@ -16,6 +16,8 @@ TagManager:
   - PNJ
   - bin
   - Plat
+  - commande
+  - borneComptoir
   layers:
   - Default
   - TransparentFX
