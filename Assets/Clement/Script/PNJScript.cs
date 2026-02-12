@@ -124,9 +124,10 @@ public class PNJScript : MonoBehaviour
 
         for (int i = 0; i < chaisePosition.Length; i++)
         {
+            int random = Random.Range(0, chaisePosition.Length);
             try
             {
-                if (chaisePosition[i] == null)
+                if (chaisePosition[random] == null)
                 {
                     Debug.Log("pas de chaise");
                 }
@@ -135,41 +136,46 @@ public class PNJScript : MonoBehaviour
             {
                 Debug.Log("djfk");
             }
-            if (!chaisePosition[i].GetComponent<chaisePosition>().chaiseOccuper)
+            
+            if (!chaisePosition[random].GetComponent<chaisePosition>().chaiseOccuper)
             {
-                chaisePosition[i].GetComponent<chaisePosition>().chaiseOccuper = true;
+                chaisePosition[random].GetComponent<chaisePosition>().chaiseOccuper = true;
                 comptoirPosition[0].GetComponent<ComptoirPosition>().ComptoirOccuper = false;
 
                 Debug.Log("les chaise ne sont pas occuper je vais m'assoir");
-                pnjNavMeshAgent.SetDestination(chaisePosition[i].transform.position);
+                pnjNavMeshAgent.SetDestination(chaisePosition[random].transform.position);
                 yield return new WaitUntil(() => Vector3.Distance(transform.position, pnjNavMeshAgent.destination) <= 1);
                 pnjNavMeshAgent.enabled = false;
-                GameObject go = chaisePosition[i].transform.GetChild(0).gameObject;
+                GameObject go = chaisePosition[random].transform.GetChild(0).gameObject;
                 transform.SetParent(go.transform, true);
                 
                 yield return new WaitForEndOfFrame();
                 transform.localPosition = Vector3.zero;
                 transform.localRotation = Quaternion.Euler(0,0,0);
-                yield return new WaitForSeconds(100000000000000);
+                yield return new WaitForSeconds(10000000);
                 //attendre pour manger
                 //faut décrémenter le burger
                 yield return new WaitForSeconds(TimeToEat);
                 transform.SetParent(null);
-                transform.position = chaisePosition[i].transform.position;
+                transform.position = chaisePosition[random].transform.position;
                 pnjNavMeshAgent.enabled = true;
-                chaisePosition[i].GetComponent<chaisePosition>().chaiseOccuper = false;
+                chaisePosition[random].GetComponent<chaisePosition>().chaiseOccuper = false;
                 break;
             }
         }
-       
+        PNJManager.instance.PNJFileAttentePoubelle.Enqueue(indicePnj);
 
         
-
+        yield return new WaitUntil(() => !bin.GetComponent<binPosition>().binOccuper && indicePnj == PNJManager.instance.PNJFileAttentePoubelle.Peek());
+        bin.GetComponent<binPosition>().binOccuper = true;
         pnjNavMeshAgent.SetDestination(bin.transform.position);
+        yield return new WaitUntil(() => Vector3.Distance(transform.position, pnjNavMeshAgent.destination) <= 1);
         yield return new WaitForSeconds(TimeDropTrash);
+        bin.GetComponent<binPosition>().binOccuper = false;
+        PNJManager.instance.PNJFileAttentePoubelle.Dequeue();
         pnjNavMeshAgent.SetDestination(startPosition);
         yield return new WaitUntil(() => Vector3.Distance(transform.position, startPosition) <=1);
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
     
 

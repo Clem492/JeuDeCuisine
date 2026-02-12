@@ -17,6 +17,7 @@ public class PNJManager : MonoBehaviour
 
     public Queue<int> PNJFileAttenteBorne = new Queue<int>();
     public Queue<int> PNJFileAttenteComptoir = new Queue<int>();
+    public Queue<int > PNJFileAttentePoubelle = new Queue<int>();
     
 
     //système de pool pour les pnj 
