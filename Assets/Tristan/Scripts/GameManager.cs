@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI argentText;
 
     public int argent;
+    public bool isPause;
     void Start()
     {
         if(instance == null)
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         argent = 0;
+        isPause = false;
     }
     private void Update()
     {
