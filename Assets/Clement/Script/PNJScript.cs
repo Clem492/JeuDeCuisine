@@ -119,9 +119,9 @@ public class PNJScript : MonoBehaviour
 
 
         //attend que le joueur prend la commande du pnj
-        yield return new WaitUntil(() => cuisine.commandePrise && Vector3.Distance(gameObject.transform.position, comptoirPosition[0].transform.position) <= 1);
+        yield return new WaitUntil(() => cuisine.commandePrise && Vector3.Distance(gameObject.transform.position, comptoirPosition[0].transform.position) <= 1 && indicePnj == PNJManager.instance.PNJFileAttenteComptoir.Peek());
         comptoirPosition[0].GetComponent<ComptoirPosition>().ComptoirOccuper = false;
-
+        PNJManager.instance.PNJFileAttenteComptoir.Dequeue();
         for (int i = 0; i < chaisePosition.Length; i++)
         {
             int random = Random.Range(0, chaisePosition.Length);

@@ -154,7 +154,7 @@ public class Cuisine : MonoBehaviour
                 }
                 if (comptoir.ComptoirOccuper)
                 {
-                    PNJManager.instance.PNJFileAttenteComptoir.Dequeue();
+                    
                     StartCoroutine(CommandePriseCoroutine());
                 }
 
