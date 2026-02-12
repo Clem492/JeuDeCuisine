@@ -70,17 +70,29 @@ public class Cuisine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
 
 
 
+
+
+        Raycast();
+        retirer();
+        VerifGiveUp();
+
+
+
+
+
+    }
+    private void Raycast()
+    {
         //recupéré la nourriture
         RaycastHit hit;
         Debug.DrawRay(cam.transform.position, cam.transform.forward * rayRange, Color.blue);
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, rayRange))
         {
             //aficher text quand ont vise un ingredients
-            if(hit.transform.gameObject.CompareTag(Pain) || hit.transform.gameObject.CompareTag(Viande) || hit.transform.gameObject.CompareTag(Champignon) || hit.transform.gameObject.CompareTag(Salade) || hit.transform.gameObject.CompareTag(Poubelle))
+            if (hit.transform.gameObject.CompareTag(Pain) || hit.transform.gameObject.CompareTag(Viande) || hit.transform.gameObject.CompareTag(Champignon) || hit.transform.gameObject.CompareTag(Salade) || hit.transform.gameObject.CompareTag(Poubelle))
             {
                 instruction.text = "Press E";
             }
@@ -121,7 +133,7 @@ public class Cuisine : MonoBehaviour
                     {
                         spawnFood.Spawn(prefabPainHaut, pileGameObject, plat);
                     }
-                    
+
 
 
                 }
@@ -133,7 +145,7 @@ public class Cuisine : MonoBehaviour
                 if (hit.transform.gameObject.CompareTag(Champignon))
                 {
                     pileString.Push(Champignon);
-                    spawnFood.Spawn(prefabChampi, pileGameObject,plat);
+                    spawnFood.Spawn(prefabChampi, pileGameObject, plat);
                 }
                 if (hit.transform.gameObject.CompareTag(Salade))
                 {
@@ -162,7 +174,7 @@ public class Cuisine : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Mouse0) && !portePlat)
             {
-                
+
                 if (hit.transform.gameObject.CompareTag("Plat"))
                 {
                     plat.GetComponent<Plat>().RecupererStack(pileGameObject);
@@ -172,17 +184,17 @@ public class Cuisine : MonoBehaviour
 
                     portePlat = true;
                     platTransporter = hit.transform.gameObject;
-                    
+
 
                 }
             }
             else if (Input.GetKeyDown(KeyCode.Mouse0) && portePlat)
             {
-                
+
                 platTransporter.transform.SetParent(null);
                 portePlat = false;
                 platTransporter.GetComponent<Rigidbody>().isKinematic = false;
-                StartCoroutine(Yo());
+                StartCoroutine(PnjRecupDelay());
             }
 
 
@@ -190,15 +202,19 @@ public class Cuisine : MonoBehaviour
 
 
         }
-        
-        retirer();
-        
-
-        
-        
-
     }
-    IEnumerator Yo()
+
+
+    private void VerifGiveUp()
+    {
+        if(transform.position.y < -50)
+        {
+            GameManager.instance.GiveUp();
+        }
+    }
+
+
+    IEnumerator PnjRecupDelay()
     {
         yield return new WaitForEndOfFrame();
         platTransporter.GetComponent<Plat>().PNJRecup();
