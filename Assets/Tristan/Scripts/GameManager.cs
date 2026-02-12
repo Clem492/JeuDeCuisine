@@ -37,4 +37,9 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("Victoire");
         }
     }
+
+    public void GiveUp()
+    {
+        SceneManager.LoadScene("GiveUp");
+    }
 }

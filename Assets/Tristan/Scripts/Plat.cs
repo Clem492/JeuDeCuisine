@@ -32,7 +32,7 @@ public class Plat : MonoBehaviour
     
     public void PNJRecup()
     {
-        tabSphere = Physics.OverlapSphere(transform.position, 6);
+        tabSphere = Physics.OverlapSphere(transform.position, 2);
         
         foreach(Collider co in tabSphere)
         {
@@ -44,5 +44,9 @@ public class Plat : MonoBehaviour
             }
         }
     }
-    
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(transform.position, 2);
+    }
 }
