@@ -30,8 +30,9 @@ public class Poubelle : MonoBehaviour
 
     public void AddGarbage()
     {
-        textPourcentage.text = garbagePourcentage + "% ";
+        
         garbagePourcentage += 5;
+        textPourcentage.text = garbagePourcentage + "% ";
         ChangeColor();
         if (garbagePourcentage >= 100 && antiSpamCoroutine)
         {

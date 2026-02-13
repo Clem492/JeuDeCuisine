@@ -5,10 +5,16 @@ public class Pause : MonoBehaviour
 {
     [SerializeField] GameObject boutonContinuer, boutonMenu;
 
+    private bool isPause;
+
     private void Start()
     {
+        
+        isPause = false;
+        Cursor.lockState = CursorLockMode.Locked;
         boutonContinuer.SetActive(false);
         boutonMenu.SetActive(false);
+        
     }
     private void Update()
     {
@@ -16,34 +22,40 @@ public class Pause : MonoBehaviour
     }
     public void AfficherPause()
     {
+        Debug.Log(isPause);
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (GameManager.instance.isPause)
+            if (isPause)
             {
+                
                 boutonContinuer.SetActive(false);
                 boutonMenu.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
-                GameManager.instance.isPause = false;
+                isPause = false;
             }
-            else
+            else if(!isPause)
             {
+                
                 boutonContinuer.SetActive(true);
                 boutonMenu.SetActive(true);
                 Cursor.lockState = CursorLockMode.None;
-                GameManager.instance.isPause = true;
+                isPause = true;
             }
         } 
     }
 
     public void Continue()
     {
+        
         boutonContinuer.SetActive(false);
         boutonMenu.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
-        GameManager.instance.isPause = false;
+        isPause = false;
     }
     public void Menu()
     {
+        Cursor.lockState = CursorLockMode.None;
+        isPause = false;
         SceneManager.LoadScene("Menu");
     }
 }
