@@ -59,10 +59,11 @@ public class PNJScript : MonoBehaviour
 
     private IEnumerator Commander()
     {
+        
         bool borneOccuper0 = false;
         bool borneOccuper1 = false;
         yield return new WaitUntil(() => !borne[0].GetComponent<borne>().borneOccuper || !borne[1].GetComponent<borne>().borneOccuper && indicePnj == PNJManager.instance.PNJFileAttenteBorne.Peek());
-
+        
         if (!borne[0].GetComponent<borne>().borneOccuper)
        {
             PNJManager.instance.PNJFileAttenteBorne.Dequeue();
@@ -131,12 +132,10 @@ public class PNJScript : MonoBehaviour
             {
                 if (chaisePosition[random] == null)
                 {
-                    Debug.Log("pas de chaise");
                 }
             }
             catch
             {
-                Debug.Log("djfk");
             }
             
             if (!chaisePosition[random].GetComponent<chaisePosition>().chaiseOccuper)
@@ -144,7 +143,6 @@ public class PNJScript : MonoBehaviour
                 chaisePosition[random].GetComponent<chaisePosition>().chaiseOccuper = true;
                 comptoirPosition[0].GetComponent<ComptoirPosition>().ComptoirOccuper = false;
 
-                Debug.Log("les chaise ne sont pas occuper je vais m'assoir");
                 pnjNavMeshAgent.SetDestination(chaisePosition[random].transform.position);
                 yield return new WaitUntil(() => Vector3.Distance(transform.position, pnjNavMeshAgent.destination) <= 1);
                 pnjNavMeshAgent.enabled = false;
@@ -181,6 +179,7 @@ public class PNJScript : MonoBehaviour
         PNJManager.instance.PNJFileAttentePoubelle.Dequeue();
         pnjNavMeshAgent.SetDestination(startPosition);
         yield return new WaitUntil(() => Vector3.Distance(transform.position, startPosition) <=1);
+        PNJManager.instance.totalPnjSpawn--;
         Destroy(gameObject);
     }
     

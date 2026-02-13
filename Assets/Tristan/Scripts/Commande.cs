@@ -1,9 +1,10 @@
-using UnityEngine;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine.UI;
-using System.Linq;
+using NootColis.Logic;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class Commande : MonoBehaviour
 {
@@ -39,6 +40,8 @@ public class Commande : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        NootColisAPI.GetStreamOfColis("Resto");
+
         croixRouge.enabled = false;
         cocheVerte.enabled = false;
 
@@ -181,6 +184,7 @@ public class Commande : MonoBehaviour
             {
                 Debug.Log("bonne commande");
                 GameManager.instance.argent += 25;
+                EnvoieArgent(25);
                 fileCommande.Dequeue();
                 fileClients.Dequeue();
                 
@@ -230,5 +234,11 @@ public class Commande : MonoBehaviour
         croixRouge.enabled = true;
         yield return new WaitForSeconds(3);
         croixRouge.enabled = false;
+    }
+
+
+    async void EnvoieArgent(int argent)
+    {
+        await NootColisAPI.SendColis("Resto", "Nicolas", argent.ToString());
     }
 }

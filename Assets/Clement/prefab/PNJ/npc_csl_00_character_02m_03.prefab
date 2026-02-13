@@ -8616,8 +8616,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TimeToEat: 120
-  TimeChooseCommand: 20
-  TimeDropTrash: 10
+  TimeChooseCommand: 2
+  TimeDropTrash: 2
   chaisePosition: []
   commandeRecu: 0
   indicePnj: 13

@@ -31,7 +31,7 @@ public class Poubelle : MonoBehaviour
     public void AddGarbage()
     {
         
-        garbagePourcentage += 5;
+        garbagePourcentage += 25;
         textPourcentage.text = garbagePourcentage + "% ";
         ChangeColor();
         if (garbagePourcentage >= 100 && antiSpamCoroutine)
@@ -45,7 +45,7 @@ public class Poubelle : MonoBehaviour
         while(garbagePourcentage >= 100)
         {
             GameManager.instance.argent -= looseMoneyWithTime;
-            looseMoneyWithTime += 1;
+            looseMoneyWithTime += 5;
             yield return new WaitForSeconds(5);
         }
         textPourcentage.text = garbagePourcentage + "% / 100%";

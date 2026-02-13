@@ -604,7 +604,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TimeToEat: 5
   TimeChooseCommand: 2
-  TimeDropTrash: 1
+  TimeDropTrash: 2
   chaisePosition: []
   commandeRecu: 0
   indicePnj: 10
